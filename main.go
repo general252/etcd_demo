@@ -20,6 +20,8 @@ import (
 const svcName = "project/test"
 
 func main() {
+	log.SetFlags(log.Ltime | log.Lshortfile)
+
 	wg := &sync.WaitGroup{}
 	s1 := server(wg)
 	s2 := server(wg)
@@ -63,9 +65,9 @@ func client() {
 		resp, err := client.Echo(ctx, &my_pb.Payload{Data: "hello"})
 		cancel()
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 		} else {
-			fmt.Println(resp)
+			log.Println(resp.Data)
 		}
 
 		<-time.After(time.Second)
